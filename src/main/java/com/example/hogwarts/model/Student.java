@@ -22,6 +22,10 @@ public class Student {
     @JsonBackReference
     private Faculty faculty;
 
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Avatar avatar;
+
     public Student(String name, Integer age) {
         this.name = name;
         this.age = age;
