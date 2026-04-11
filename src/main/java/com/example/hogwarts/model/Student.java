@@ -1,6 +1,7 @@
 package com.example.hogwarts.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class Student {
     private Faculty faculty;
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonIgnore
     private Avatar avatar;
 
     public Student(String name, Integer age) {
