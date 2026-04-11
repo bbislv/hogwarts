@@ -6,6 +6,8 @@ import com.example.hogwarts.service.FacultyService;
 import com.example.hogwarts.service.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -74,5 +76,14 @@ public class FacultyController {
     @GetMapping("/{id}/students")
     public List<Student> getFacultyStudents(@PathVariable Long id) {
         return studentService.findByFacultyId(id);
+    }
+
+    @GetMapping("/longest-name")
+    public String getLongestFacultyName() {
+        return facultyService.findAll()
+                .stream()
+                .max(Comparator.comparingInt(faculty -> faculty.getName().length()))
+                .map(Faculty::getName)
+                .orElse("");
     }
 }

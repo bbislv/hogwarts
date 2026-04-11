@@ -6,6 +6,7 @@ import com.example.hogwarts.service.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/student")
@@ -83,13 +84,27 @@ public class StudentController {
         return studentService.countAllStudents();
     }
 
-    @GetMapping("/average-age")
-    public Double getAverageAgeOfStudents() {
-        return studentService.getAverageStudentAge();
-    }
-
     @GetMapping("/last-5")
     public List<Student> getLast5Students() {
         return studentService.findLast5Students();
+    }
+
+    @GetMapping("/names-starts-with-a")
+    public List<String> getStudentNamesStartsWithA() {
+        return studentService.findAll()
+                .stream()
+                .filter(student -> student.getName().toUpperCase().startsWith("A"))
+                .map(student -> student.getName().toUpperCase())
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/average-age")
+    public Double getAverageStudentAge() {
+        return studentService.findAll()
+                .stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElse(0.0);
     }
 }
