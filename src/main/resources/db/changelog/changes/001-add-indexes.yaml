@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: "add-indexes-001"
+      author: "BB"
+      changes:
+        - createIndex:
+            indexName: "idx_student_name"
+            tableName: "student"
+            columns:
+              - column: { name: "name" }
+        - createIndex:
+            indexName: "idx_faculty_name_color"
+            tableName: "faculty"
+            columns:
+              - column: { name: "name" }
+              - column: { name: "color" }
